@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/screnns/auth_screen_.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_chat/screnns/firebase_helper.dart';
 import 'auth_screen_.dart';
 class Register extends StatelessWidget {
 
