@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/screnns/change_password.dart';
-import 'package:flutter_chat/screnns/firebase_helper.dart';
-import 'package:flutter_chat/screnns/register.dart';
+import 'package:flutter_chat/screnns/auth_screen_.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-class AuthScreen extends StatelessWidget {
+
+import 'auth_screen_.dart';
+class Register extends StatelessWidget {
+
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   Service service = Service();
@@ -20,7 +20,7 @@ class AuthScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Login sahifa",
+              Text("Ro'yhatdan o'tish sahifasi",
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold
@@ -31,7 +31,7 @@ class AuthScreen extends StatelessWidget {
                 child: TextField(
                   controller: email,
                   decoration: InputDecoration(
-                      hintText: "Emailingizni kiriting",
+                      hintText: "Emailingizni kiritingl",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)
                       )
@@ -44,6 +44,7 @@ class AuthScreen extends StatelessWidget {
                   controller: password,
                   decoration: InputDecoration(
                       hintText: "Parolingizni kiriting",
+
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)
                       )
@@ -54,38 +55,22 @@ class AuthScreen extends StatelessWidget {
                   style: TextButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 80)
                   ),
-                  onPressed: () async{
+                  onPressed: ()async{
                     SharedPreferences pref = await SharedPreferences.getInstance();
                     if(email.text.isNotEmpty && password.text.isNotEmpty){
-                      service.loginUser(context, email.text, password.text);
+                      service.createUser(context, email.text, password.text);
                       pref.setString("email", email.text);
                     }
                     else{
-                      service.errorBox(context, "Iltimos so'rovnomalarin to'ldiring !");
+                      service.errorBox(context, "Please Fill all of them");
                     }
                   },
-                  child: Text("Login")),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Register()));
-                    },
-                    child: Text("Menda hali akkaunt yo'q"),),
-                  TextButton(
-                      onPressed: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>ChangePassword()));
-                      },
-                      child: Text(
-                        "Yangi parol",
-                        style: TextStyle(
-                            color: Colors.green
-                        ),
-                      ))
-                ],
-              )
-
+                  child: Text("Register")),
+              TextButton(
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>AuthScreen()));
+                  },
+                  child: Text("Menda akkaunt bor."))
             ],
           ),
         ),
