@@ -37,6 +37,9 @@ class _SinfQowiwState extends State<SinfQowiw> {
         tutorial: infoData['tutorial'],
         name: infoData['name'],
         time:   infoData['time'],
+        rate: infoData["rateOfStudent"],
+        data: infoData["dateOfStudent"],
+        names: infoData["nameOfStudent"],
       ));
     });
     setState(() {
@@ -74,10 +77,8 @@ class _SinfQowiwState extends State<SinfQowiw> {
                 onTap: (){
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => ActiceOquvchilar(
-                      loadedOrders[index].name,
-                      loadedOrders[index].time,
-                      loadedOrders[index].tutorial,
-                      loadedOrders[index].id
+                      loadedOrders[index],
+                    Tamcha
                   ))
                   );
                 },
@@ -120,9 +121,15 @@ class InfoPupils{
   String name;
   String tutorial;
   String time;
+  List<dynamic> names;
+  List<dynamic> data;
+  List rate;
   InfoPupils(
       {
         required this.id,
+        required this.names,
+        required this.data,
+        required this.rate,
         required this.name,
         required this.tutorial,
         required this.time

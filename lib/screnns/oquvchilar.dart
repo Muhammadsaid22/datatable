@@ -167,23 +167,16 @@ class _OquvchilarState extends State<Oquvchilar> {
                         onPressed: (){
                           count++;
 
-                          data.add({
-                            "controller":
-                            [
-                              for(int i = 0; i<count;i++){
-                                for(int j = 0;j<51;j++){
-                                  rate.add({
-                                    "controller2":
-                                  [
-                                      for (int i = 1; i < 51; i++)
-                                        {
-                                          TextEditingController(),
-                                        }
-                                    ]}),},
-                                TextEditingController(),
-                              }
-                            ]}
-                          );
+                          data.add(TextEditingController());
+                          List<TextEditingController> temp = [];
+                          for (int j = 0; j < 51; j++) {
+                            temp.add(TextEditingController());
+                          };
+                          rate.add(temp);
+
+                          setState(() {
+
+                          });
 
 
                           setState(() {
@@ -218,9 +211,9 @@ class _OquvchilarState extends State<Oquvchilar> {
                                     "name":name_controller.text,
                                     "time":time_controller.text,
                                     "tutorial":group_controller.text,
-                                    "nameOfStudent": jsonEncode(dataStrings).toString(),
-                                    "dateOfStudent":jsonEncode(sanaStrings).toString(),
-                                    "rateOfStudent":jsonEncode(rateStrings).toString()
+                                    "nameOfStudent":[],
+                                    "dateOfStudent":[],
+                                    "rateOfStudent":[],
                                   }
                               )
                           );
@@ -230,6 +223,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                           );
                           print(responce.body);
                           print(getresponec.body);
+
                         }
                     ),
 

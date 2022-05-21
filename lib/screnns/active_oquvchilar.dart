@@ -1,42 +1,65 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/screnns/sinf_qowiw.dart';
 import 'package:http/http.dart'as http;
 class ActiceOquvchilar extends StatefulWidget {
-  String name;
-  String time;
-  String group;
-  String id;
-  ActiceOquvchilar(this.name, this.time, this.group, this.id);
+  final InfoPupils sinf;
+  final Future<void> Function() getsinf;
+
+  ActiceOquvchilar(this.sinf,this.getsinf);
 
   @override
   _ActiceOquvchilarState createState() => _ActiceOquvchilarState();
 }
 class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
-  @override
+
    TextEditingController name_controller = TextEditingController(text: '');
    TextEditingController pupil_name_controller = TextEditingController(text: '');
    TextEditingController rate_controller = TextEditingController(text: '');
    TextEditingController group_controller = TextEditingController(text: '');
    TextEditingController time_controller = TextEditingController(text: '');
+   int count = 0;
+   bool isLoading = true;
+
+    @override
   void initState() {
+      count = widget.sinf.names.length;
     // TODO: implement initState
     super.initState();
     active();
   }
-  void active(){
+
+  void active() {
+      print('############################');
+    print(widget.sinf.data);
+      print('############################');
+    widget.sinf.data.forEach((el12) {
+      sana.add(TextEditingController(text: el12));
+    });
+      print(sana.length);
+     widget.sinf.names.forEach((el123) {
+       data.add(TextEditingController(text: el123));
+     });
+     widget.sinf.rate.forEach((element) {
+       List<TextEditingController> temp23 = [];
+       element.forEach((element1) {
+         temp23.add(TextEditingController(text: element1));
+       });
+       rate.add(temp23);
+     });
+    name_controller = TextEditingController(text: widget.sinf.name);
+    group_controller = TextEditingController(text: widget.sinf.tutorial);
+    time_controller = TextEditingController(text: widget.sinf.time);
     setState(() {
-      name_controller = TextEditingController(text: widget.name);
-      pupil_name_controller = TextEditingController(text: '');
-      rate_controller = TextEditingController(text: '');
-      group_controller = TextEditingController(text: widget.group);
-      time_controller = TextEditingController(text: widget.time);
+      isLoading = false;
     });
   }
-  List<dynamic> data = [];
-  List<dynamic> rate = [];
+  List<TextEditingController> data = [];
+  List<List<TextEditingController>> rate = [];
   Service service = Service();
   List<dynamic> sana = [
     TextEditingController(),
@@ -92,7 +115,6 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
     TextEditingController(),
   ];
 
-  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,10 +122,13 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
         title: Text('Daomad',
           style: TextStyle(
               color: Colors.black
-          ),),
+          ),
+        ),
         backgroundColor: Colors.yellow,
       ),
-      body: Container(
+      body: isLoading?Center(
+        child: CircularProgressIndicator(),)
+      :Container(
         height: double.infinity,
         padding: EdgeInsets.only(top: 25,left: 10,right: 10,bottom: 10),
         child: SingleChildScrollView(
@@ -187,24 +212,12 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                         onPressed: (){
                           count++;
 
-                          data.add({
-                            "controller":
-                              [
-                                for(int i = 0; i<count;i++){
-                                  for(int j = 0;j<51;j++){
-                                    rate.add({
-                                      "controller2":
-                                      [
-                                        for (int i = 1; i < 51; i++)
-                                          {
-                                            TextEditingController(),
-                                          }
-                                      ]}),},
-                                  TextEditingController(),
-                                }
-                              ]}
-                          );
-
+                          data.add(TextEditingController());
+                          List<TextEditingController> temp = [];
+                          for (int j = 0; j < 51; j++) {
+                            temp.add(TextEditingController());
+                          };
+                          rate.add(temp);
 
                           setState(() {
 
@@ -218,41 +231,45 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                         color: Colors.blue,
                         onPressed: () async {
                           List<String> dataStrings = [];
-                          List<String> rateStrings = [];
+                          List<List<String>> rateStrings = [];
                           List<String> sanaStrings = [];
-                          data.forEach((element) {
-                            dataStrings.add(element[0].text);
-                          });
-                          rate.forEach((element) {
-                            rateStrings.add(element[0].text);
-                          });
                           sana.forEach((element) {
                             sanaStrings.add(element.text);
                           });
+                          print(sanaStrings);
+                          print(data);
+                          data.forEach((element) {
+                            dataStrings.add(element.text);
+                          });
+                          print(dataStrings);
+                          rate.forEach((element) {
+                            List<String> temp23 = [];
+                            element.forEach((element1) {
+                              temp23.add(element1.text);
+                            });
+                            rateStrings.add(temp23);
+                          });
+                          print(rate);
 
-
-                          final  responce = await http.post(
-                              Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils.json'),
+                          final  responce = await http.patch(
+                              Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils/${widget.sinf.id}.json'),
                               body: jsonEncode(
                                   {
                                     "name":name_controller.text,
                                     "time":time_controller.text,
                                     "tutorial":group_controller.text,
-                                    /*"nameOfStudent": jsonEncode(dataStrings).toString(),
-                                    "dateOfStudent":jsonEncode(sanaStrings).toString(),
-                                    "rateOfStudent":jsonEncode(rateStrings).toString()*/
+                                    "nameOfStudent": dataStrings,
+                                    "dateOfStudent":sanaStrings,
+                                    "rateOfStudent":rateStrings
                                   }
                               )
                           );
-                          final  getresponec = await http.get(
-                            Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils.json'),
 
-                          );
-                          print(name_controller.text);
-                          print(time_controller.text);
-                          print(group_controller.text);
+                          print(dataStrings);
+                          print(sanaStrings);
+                          print(rateStrings);
                           print(responce.body);
-                          print(getresponec.body);
+                         await widget.getsinf;
                         }
                     ),
 
@@ -294,7 +311,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                           child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              itemCount: 50,
+                              itemCount: sana.length,
                               itemBuilder: (context,index)=>Container(
                                 height: 100,
                                 width: 30,
@@ -344,7 +361,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                                     contentPadding:
                                     EdgeInsets.only(left: 2, bottom: 18),
                                   ),
-                                  controller: data[count],
+                                  controller: data[index],
                                 ),
                               ),
                               Container(
@@ -354,7 +371,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                                     physics: NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     itemCount: 50,
-                                    itemBuilder: (context,index)=>Container(
+                                    itemBuilder: (context,index2)=>Container(
                                       height: 30,
                                       width: 30,
                                       padding: EdgeInsets.only(left: 8,bottom: 6),
@@ -371,7 +388,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                                             EdgeInsets.only(left: 2, bottom: 18),
                                           ),
 
-                                          controller: rate[index][0],
+                                          controller: rate[index][index2],
                                         ),
                                       ),
                                     )),
