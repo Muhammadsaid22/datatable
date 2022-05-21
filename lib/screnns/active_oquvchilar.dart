@@ -1,15 +1,40 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
-class Oquvchilar extends StatefulWidget {
+class ActiceOquvchilar extends StatefulWidget {
+  String name;
+  String time;
+  String group;
+  String id;
+  ActiceOquvchilar(this.name, this.time, this.group, this.id);
 
   @override
-  _OquvchilarState createState() => _OquvchilarState();
+  _ActiceOquvchilarState createState() => _ActiceOquvchilarState();
 }
-
-class _OquvchilarState extends State<Oquvchilar> {
+class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
+  @override
+   TextEditingController name_controller = TextEditingController(text: '');
+   TextEditingController pupil_name_controller = TextEditingController(text: '');
+   TextEditingController rate_controller = TextEditingController(text: '');
+   TextEditingController group_controller = TextEditingController(text: '');
+   TextEditingController time_controller = TextEditingController(text: '');
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    active();
+  }
+  void active(){
+    setState(() {
+      name_controller = TextEditingController(text: widget.name);
+      pupil_name_controller = TextEditingController(text: '');
+      rate_controller = TextEditingController(text: '');
+      group_controller = TextEditingController(text: widget.group);
+      time_controller = TextEditingController(text: widget.time);
+    });
+  }
   List<dynamic> data = [];
   List<dynamic> rate = [];
   Service service = Service();
@@ -66,13 +91,8 @@ class _OquvchilarState extends State<Oquvchilar> {
     TextEditingController(),
     TextEditingController(),
   ];
-  final TextEditingController name_controller = TextEditingController(text: '');
-  final TextEditingController pupil_name_controller = TextEditingController(text: '');
-  final TextEditingController rate_controller = TextEditingController(text: '');
-  final TextEditingController group_controller = TextEditingController(text: '');
-  final TextEditingController time_controller = TextEditingController(text: '');
-  int count = 0;
 
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,20 +189,20 @@ class _OquvchilarState extends State<Oquvchilar> {
 
                           data.add({
                             "controller":
-                            [
-                              for(int i = 0; i<count;i++){
-                                for(int j = 0;j<51;j++){
-                                  rate.add({
-                                    "controller2":
-                                  [
-                                      for (int i = 1; i < 51; i++)
-                                        {
-                                          TextEditingController(),
-                                        }
-                                    ]}),},
-                                TextEditingController(),
-                              }
-                            ]}
+                              [
+                                for(int i = 0; i<count;i++){
+                                  for(int j = 0;j<51;j++){
+                                    rate.add({
+                                      "controller2":
+                                      [
+                                        for (int i = 1; i < 51; i++)
+                                          {
+                                            TextEditingController(),
+                                          }
+                                      ]}),},
+                                  TextEditingController(),
+                                }
+                              ]}
                           );
 
 
@@ -218,9 +238,9 @@ class _OquvchilarState extends State<Oquvchilar> {
                                     "name":name_controller.text,
                                     "time":time_controller.text,
                                     "tutorial":group_controller.text,
-                                    "nameOfStudent": jsonEncode(dataStrings).toString(),
+                                    /*"nameOfStudent": jsonEncode(dataStrings).toString(),
                                     "dateOfStudent":jsonEncode(sanaStrings).toString(),
-                                    "rateOfStudent":jsonEncode(rateStrings).toString()
+                                    "rateOfStudent":jsonEncode(rateStrings).toString()*/
                                   }
                               )
                           );
@@ -228,6 +248,9 @@ class _OquvchilarState extends State<Oquvchilar> {
                             Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils.json'),
 
                           );
+                          print(name_controller.text);
+                          print(time_controller.text);
+                          print(group_controller.text);
                           print(responce.body);
                           print(getresponec.body);
                         }

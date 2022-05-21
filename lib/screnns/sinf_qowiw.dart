@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'active_oquvchilar.dart';
 import 'oquvchilar.dart';
 import 'package:http/http.dart'as http;
 class SinfQowiw extends StatefulWidget {
@@ -69,32 +70,44 @@ class _SinfQowiwState extends State<SinfQowiw> {
           height: double.infinity,
           child: ListView.builder(
               itemCount: loadedOrders.length,
-              itemBuilder: (context,index) =>Container(
-                margin: EdgeInsets.all(6),
-                height: 70,
-                width: MediaQuery.of(context).size.width*85,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.blueAccent
-                    ),
-                    borderRadius: BorderRadius.circular(16)
-                ),
-                child: ListTile(
-                  title: Text(loadedOrders[index].tutorial,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                    ),),
-                  subtitle: Text(loadedOrders[index].name,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold
-                    ),),
-                  trailing: Text(loadedOrders[index].time,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                    ),),
+              itemBuilder: (context,index) =>InkWell(
+                onTap: (){
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => ActiceOquvchilar(
+                      loadedOrders[index].name,
+                      loadedOrders[index].time,
+                      loadedOrders[index].tutorial,
+                      loadedOrders[index].id
+                  ))
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.all(6),
+                  height: 70,
+                  width: MediaQuery.of(context).size.width*85,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.blueAccent
+                      ),
+                      borderRadius: BorderRadius.circular(16)
+                  ),
+                  child: ListTile(
+                    title: Text(loadedOrders[index].tutorial,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold
+                      ),),
+                    subtitle: Text(loadedOrders[index].name,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold
+                      ),),
+                    trailing: Text(loadedOrders[index].time,
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold
+                      ),),
+                  ),
                 ),
               )
           ),
