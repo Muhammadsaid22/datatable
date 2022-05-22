@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
+
+import 'kirish.dart';
 class Oquvchilar extends StatefulWidget {
 
   @override
@@ -10,8 +12,62 @@ class Oquvchilar extends StatefulWidget {
 }
 
 class _OquvchilarState extends State<Oquvchilar> {
-  List<dynamic> data = [];
-  List<dynamic> rate = [];
+  List<dynamic> data = [TextEditingController()];
+  List<dynamic> rate = [
+    [
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+    ]
+  ];
   Service service = Service();
   List<dynamic> sana = [
     TextEditingController(),
@@ -71,13 +127,13 @@ class _OquvchilarState extends State<Oquvchilar> {
   final TextEditingController rate_controller = TextEditingController(text: '');
   final TextEditingController group_controller = TextEditingController(text: '');
   final TextEditingController time_controller = TextEditingController(text: '');
-  int count = 0;
+  int count = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daomad',
+        title: Text('fuck',
           style: TextStyle(
               color: Colors.black
           ),),
@@ -144,23 +200,6 @@ class _OquvchilarState extends State<Oquvchilar> {
                       height: 50,
                       width: 30,
                     ),
-                    Row(
-                      children: [
-                        RaisedButton(
-                            child: Text("O\'chirish"),
-                            color: Colors.red,
-                            onPressed: (){
-                              if(count > 1){
-                                data.remove(count-1);
-                                count--;
-                              }
-                              setState(() {
-
-                              });
-                            }),
-                      ],
-                    ),
-
                     RaisedButton(
                         child: Text("Qo\'shish"),
                         color: Colors.green,
@@ -177,11 +216,6 @@ class _OquvchilarState extends State<Oquvchilar> {
                           setState(() {
 
                           });
-
-
-                          setState(() {
-
-                          });
                         }),
                     SizedBox(
                       width: 30,
@@ -191,18 +225,25 @@ class _OquvchilarState extends State<Oquvchilar> {
                         color: Colors.blue,
                         onPressed: () async {
                           List<String> dataStrings = [];
-                          List<String> rateStrings = [];
+                          List<List<String>> rateStrings = [];
                           List<String> sanaStrings = [];
-                          data.forEach((element) {
-                            dataStrings.add(element[0].text);
-                          });
-                          rate.forEach((element) {
-                            rateStrings.add(element[0].text);
-                          });
                           sana.forEach((element) {
                             sanaStrings.add(element.text);
                           });
-
+                          print(sanaStrings);
+                          print(data);
+                          data.forEach((element) {
+                            dataStrings.add(element.text);
+                          });
+                          print(dataStrings);
+                          rate.forEach((element) {
+                            List<String> temp23 = [];
+                            element.forEach((element1) {
+                              temp23.add(element1.text);
+                            });
+                            rateStrings.add(temp23);
+                          });
+                          print(rate);
 
                           final  responce = await http.post(
                               Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils.json'),
@@ -211,19 +252,20 @@ class _OquvchilarState extends State<Oquvchilar> {
                                     "name":name_controller.text,
                                     "time":time_controller.text,
                                     "tutorial":group_controller.text,
-                                    "nameOfStudent":[],
-                                    "dateOfStudent":[],
-                                    "rateOfStudent":[],
+                                    "nameOfStudent": dataStrings,
+                                    "dateOfStudent":sanaStrings,
+                                    "rateOfStudent":rateStrings
                                   }
                               )
                           );
-                          final  getresponec = await http.get(
-                            Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils.json'),
 
-                          );
+                          print(dataStrings);
+                          print(sanaStrings);
+                          print(rateStrings);
                           print(responce.body);
-                          print(getresponec.body);
-
+                          Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(builder: (builder)=> Kirish()),
+                                  (route) => false);
                         }
                     ),
 
@@ -245,6 +287,9 @@ class _OquvchilarState extends State<Oquvchilar> {
                   children: [
                     Row(
                       children: [
+                        SizedBox(
+                          width: 25,
+                        ),
                         Container(
                             height: 100,
                             width: 200,
@@ -265,7 +310,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                           child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              itemCount: 50,
+                              itemCount: sana.length,
                               itemBuilder: (context,index)=>Container(
                                 height: 100,
                                 width: 30,
@@ -301,6 +346,21 @@ class _OquvchilarState extends State<Oquvchilar> {
                           itemCount: count,
                           itemBuilder: (context,index) => Row(
                             children: [
+                              InkWell(
+                                  onTap: (){
+                                    if(count > 1){
+                                      data.removeAt(index);
+                                      rate.removeAt(index);
+                                      count--;
+                                    }
+                                    setState(() {
+
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.highlight_remove_rounded,
+                                    color: Colors.red,)
+                              ),
                               Container(
                                 height: 30,
                                 width: 200,
@@ -315,7 +375,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                                     contentPadding:
                                     EdgeInsets.only(left: 2, bottom: 18),
                                   ),
-                                  controller: data[count],
+                                  controller: data[index],
                                 ),
                               ),
                               Container(
@@ -325,7 +385,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                                     physics: NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     itemCount: 50,
-                                    itemBuilder: (context,index)=>Container(
+                                    itemBuilder: (context,index2)=>Container(
                                       height: 30,
                                       width: 30,
                                       padding: EdgeInsets.only(left: 8,bottom: 6),
@@ -342,7 +402,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                                             EdgeInsets.only(left: 2, bottom: 18),
                                           ),
 
-                                          controller: rate[index][0],
+                                          controller: rate[index][index2],
                                         ),
                                       ),
                                     )),

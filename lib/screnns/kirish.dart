@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/screnns/sinf_qowiw.dart';
+import 'package:flutter_chat/screnns/teachers.dart';
 
 import 'change_password.dart';
 import 'oquvchilar.dart';
@@ -46,7 +47,7 @@ class Kirish extends StatelessWidget {
                 InkWell(
                   onTap: ((){
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => Oquvchilar()));
+                        context, MaterialPageRoute(builder: (_) => Teachers()));
                   }),
                   child: Container(
                     height: 140,

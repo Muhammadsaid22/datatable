@@ -22,7 +22,7 @@ class _SinfQowiwState extends State<SinfQowiw> {
 
   }
 
-  Future<void> Tamcha() async {
+  void Tamcha() async {
     final  response = await http.get(
       Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils.json'),
     );
@@ -54,18 +54,31 @@ class _SinfQowiwState extends State<SinfQowiw> {
 
         appBar: AppBar(
           actions: [
-            IconButton(
-                onPressed: ()
-                async {
+            Row(
+              children: [
+                IconButton(
+                    onPressed: (){
+                      loadedOrders.removeAt(0);
+                      setState(() {
 
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Oquvchilar())
-                  );
-                },
-                icon: Icon(Icons.add,
-                    size: 32,
-                    color: Colors.white
-                )
+                      });
+                      print(loadedOrders);
+                    },
+                    icon: Icon(Icons.remove)),
+                IconButton(
+                    onPressed: ()
+                    async {
+
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => Oquvchilar())
+                      );
+                    },
+                    icon: Icon(Icons.add,
+                        size: 32,
+                        color: Colors.white
+                    )
+                ),
+              ],
             )
           ],
         ),

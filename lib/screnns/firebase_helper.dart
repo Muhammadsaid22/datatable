@@ -7,23 +7,6 @@ import 'auth_screen_.dart';
 
 class Service{
   final auth = FirebaseAuth.instance;
-
-  void forAdmin(context,email,password)async{
-    try{
-      await auth.createUserWithEmailAndPassword(email: email, password: password).then((value) =>
-
-          Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (builder)=> Kirish()),
-                  (route) => false)
-      );
-    }
-
-    catch(e){
-      errorBox(context, e);
-    }
-
-  }
-
   void createUser(context,email,password)async{
     try{
       await auth.createUserWithEmailAndPassword(email: email, password: password).then((value) =>
