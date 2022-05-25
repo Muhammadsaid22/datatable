@@ -52,8 +52,9 @@ class _SinfQowiwState extends State<SinfQowiw> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.yellow,
+
         appBar: AppBar(
+          backgroundColor: Colors.yellow,
           actions: [
             IconButton(
                 onPressed: ()

@@ -52,8 +52,9 @@ class _OqituvchiQowiwState extends State<OqituvchiQowiw> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.yellow,
+
         appBar: AppBar(
+          backgroundColor: Colors.yellow,
           actions: [
             IconButton(
                 onPressed: ()
@@ -99,6 +100,7 @@ class _OqituvchiQowiwState extends State<OqituvchiQowiw> {
                             Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/teachers2/${loadedOrdersTeachers[index].id}.json'),
                           );
                           setState(() {
+                            isLoading = true;
                             loadedOrdersTeachers.length;
                           });
                           Tamcha();
