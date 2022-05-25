@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/screnns/auth/auth_screen_.dart';
-import 'package:flutter_chat/screnns/kirish.dart';
-import 'package:flutter_chat/screnns/auth/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -19,7 +17,7 @@ void main() async {
   var email = pref.getString('email');
   runApp( MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Kirish()
+      home: AuthScreen()
   ));
 }
 

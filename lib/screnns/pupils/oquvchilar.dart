@@ -133,7 +133,7 @@ class _OquvchilarState extends State<Oquvchilar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('fuck',
+        title: Text('O\'quvchilar Daomadi',
           style: TextStyle(
               color: Colors.black
           ),),
@@ -237,12 +237,10 @@ class _OquvchilarState extends State<Oquvchilar> {
                           sana.forEach((element) {
                             sanaStrings.add(element.text);
                           });
-                          print(sanaStrings);
-                          print(data);
                           data.forEach((element) {
                             dataStrings.add(element.text);
                           });
-                          print(dataStrings);
+
                           rate.forEach((element) {
                             List<String> temp23 = [];
                             element.forEach((element1) {
@@ -250,7 +248,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                             });
                             rateStrings.add(temp23);
                           });
-                          print(rate);
+
 
                           final  responce = await http.post(
                               Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils.json'),
@@ -266,10 +264,6 @@ class _OquvchilarState extends State<Oquvchilar> {
                               )
                           );
 
-                          print(dataStrings);
-                          print(sanaStrings);
-                          print(rateStrings);
-                          print(responce.body);
 
                           Navigator.pushAndRemoveUntil(context,
                               MaterialPageRoute(builder: (builder)=> Kirish()),

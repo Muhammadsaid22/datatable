@@ -133,7 +133,7 @@ class _TeachersState extends State<Teachers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('fuck',
+        title: Text('O\'qituvchilar Daomadi',
           style: TextStyle(
               color: Colors.black
           ),),
@@ -237,12 +237,11 @@ class _TeachersState extends State<Teachers> {
                             sana.forEach((element) {
                               sanaStrings.add(element.text);
                             });
-                            print(sanaStrings);
-                            print(data);
+
                             data.forEach((element) {
                               dataStrings.add(element.text);
                             });
-                            print(dataStrings);
+
                             rate.forEach((element) {
                               List<String> temp23 = [];
                               element.forEach((element1) {
@@ -250,7 +249,7 @@ class _TeachersState extends State<Teachers> {
                               });
                               rateStrings.add(temp23);
                             });
-                            print(rate);
+
 
                             final  responce = await http.post(
                                 Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/teachers2.json'),
@@ -266,10 +265,7 @@ class _TeachersState extends State<Teachers> {
                                 )
                             );
 
-                            print(dataStrings);
-                            print(sanaStrings);
-                            print(rateStrings);
-                            print(responce.body);
+
 
                             Navigator.pushAndRemoveUntil(context,
                                 MaterialPageRoute(builder: (builder)=> Kirish()),

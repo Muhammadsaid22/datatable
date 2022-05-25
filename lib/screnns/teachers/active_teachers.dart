@@ -34,15 +34,15 @@ class _ActiveTeachersState extends State<ActiveTeachers> {
   }
 
   void active() {
-    print("3");
+
     for(String el12 in widget.sinf.data){
       sana.add(TextEditingController(text: el12));
     }
-    print("4");
+
     for(String el123 in widget.sinf.names){
       data.add(TextEditingController(text: el123));
     }
-    print("5");
+
     for(List element in widget.sinf.rate){
       List<TextEditingController> temp23 = [];
       for(String element1 in element){
@@ -51,14 +51,14 @@ class _ActiveTeachersState extends State<ActiveTeachers> {
       rate.add(temp23);
     }
 
-    print("6");
+
     name_controller = TextEditingController(text: widget.sinf.name);
     group_controller = TextEditingController(text: widget.sinf.tutorial);
     time_controller = TextEditingController(text: widget.sinf.time);
     setState(() {
       isLoading = false;
     });
-    print("7");
+
   }
   List<TextEditingController> data = [];
   List<List<TextEditingController>> rate = [];
@@ -69,7 +69,7 @@ class _ActiveTeachersState extends State<ActiveTeachers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daomad',
+        title: Text('O\'qituvchilar Daomadi',
           style: TextStyle(
               color: Colors.black
           ),
@@ -178,12 +178,11 @@ class _ActiveTeachersState extends State<ActiveTeachers> {
                             sana.forEach((element) {
                               sanaStrings.add(element.text);
                             });
-                            print(sanaStrings);
-                            print(data);
+
                             data.forEach((element) {
                               dataStrings.add(element.text);
                             });
-                            print(dataStrings);
+
                             rate.forEach((element) {
                               List<String> temp23 = [];
                               element.forEach((element1) {
@@ -191,7 +190,7 @@ class _ActiveTeachersState extends State<ActiveTeachers> {
                               });
                               rateStrings.add(temp23);
                             });
-                            print(rate);
+
 
                             final  responce = await http.patch(
                                 Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/teachers2/${widget.sinf.id}.json'),
@@ -207,10 +206,6 @@ class _ActiveTeachersState extends State<ActiveTeachers> {
                                 )
                             );
 
-                            print(dataStrings);
-                            print(sanaStrings);
-                            print(rateStrings);
-                            print(responce.body);
                             await widget.getsinf;
                             Navigator.pushAndRemoveUntil(context,
                                 MaterialPageRoute(builder: (builder)=> Kirish()),

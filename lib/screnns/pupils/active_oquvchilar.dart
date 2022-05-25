@@ -35,15 +35,15 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
   }
 
   void active() {
-      print('3');
+
     widget.sinf.data.forEach((el12) {
       sana.add(TextEditingController(text: el12));
     });
-    print("4");
+
      widget.sinf.names.forEach((el123) {
        data.add(TextEditingController(text: el123));
      });
-      print("5");
+
      widget.sinf.rate.forEach((element) {
        List<TextEditingController> temp23 = [];
        element.forEach((element1) {
@@ -51,14 +51,14 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
        });
        rate.add(temp23);
      });
-      print("6");
+
     name_controller = TextEditingController(text: widget.sinf.name);
     group_controller = TextEditingController(text: widget.sinf.tutorial);
     time_controller = TextEditingController(text: widget.sinf.time);
     setState(() {
       isLoading = false;
     });
-      print("7");
+
   }
   List<TextEditingController> data = [];
   List<List<TextEditingController>> rate = [];
@@ -69,7 +69,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daomad',
+        title: Text('O\'quvchilar Daomadi',
           style: TextStyle(
               color: Colors.black
           ),
@@ -178,12 +178,11 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                           sana.forEach((element) {
                             sanaStrings.add(element.text);
                           });
-                          print(sanaStrings);
-                          print(data);
+
                           data.forEach((element) {
                             dataStrings.add(element.text);
                           });
-                          print(dataStrings);
+
                           rate.forEach((element) {
                             List<String> temp23 = [];
                             element.forEach((element1) {
@@ -191,7 +190,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                             });
                             rateStrings.add(temp23);
                           });
-                          print(rate);
+
 
                           final  responce = await http.patch(
                               Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils/${widget.sinf.id}.json'),
@@ -207,10 +206,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                               )
                           );
 
-                          print(dataStrings);
-                          print(sanaStrings);
-                          print(rateStrings);
-                          print(responce.body);
+
                           Navigator.pushAndRemoveUntil(context,
                               MaterialPageRoute(builder: (builder)=> Kirish()),
                                   (route) => false);

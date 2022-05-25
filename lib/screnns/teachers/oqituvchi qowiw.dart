@@ -46,13 +46,13 @@ class _OqituvchiQowiwState extends State<OqituvchiQowiw> {
     setState(() {
       isLoading = false;
     });
-    print(extractedData);
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+        backgroundColor: Colors.yellow,
         appBar: AppBar(
           actions: [
             IconButton(
@@ -76,14 +76,14 @@ class _OqituvchiQowiwState extends State<OqituvchiQowiw> {
               itemCount: loadedOrdersTeachers.length,
               itemBuilder: (context,index) =>InkWell(
                 onTap: (){
-                  print("1");
+
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => ActiveTeachers(
                       loadedOrdersTeachers[index],
                       Tamcha
                   ))
                   );
-                  print("2");
+
                 },
                 child: Slidable(
                   endActionPane: ActionPane(

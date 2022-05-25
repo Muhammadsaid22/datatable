@@ -46,13 +46,13 @@ class _SinfQowiwState extends State<SinfQowiw> {
     setState(() {
       isLoading = false;
     });
-    print(extractedData);
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+        backgroundColor: Colors.yellow,
         appBar: AppBar(
           actions: [
             IconButton(
@@ -76,13 +76,13 @@ class _SinfQowiwState extends State<SinfQowiw> {
               itemCount: loadedOrders.length,
               itemBuilder: (context,index) =>InkWell(
                 onTap: (){
-                  print('1');
+
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => ActiceOquvchilar(
                       loadedOrders[index],
                   ))
                   );
-                  print('2');
+
                 },
                 child: Slidable(
                   endActionPane: ActionPane(
