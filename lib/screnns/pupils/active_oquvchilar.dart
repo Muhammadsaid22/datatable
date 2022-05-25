@@ -1,145 +1,84 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/screnns/pupils/sinf_qowiw.dart';
 import 'package:http/http.dart'as http;
 
-import 'kirish.dart';
-class Oquvchilar extends StatefulWidget {
+import '../kirish.dart';
+class ActiceOquvchilar extends StatefulWidget {
+  final InfoPupils sinf;
+
+  ActiceOquvchilar(this.sinf);
 
   @override
-  _OquvchilarState createState() => _OquvchilarState();
+  _ActiceOquvchilarState createState() => _ActiceOquvchilarState();
 }
+class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
 
-class _OquvchilarState extends State<Oquvchilar> {
-  List<dynamic> data = [TextEditingController()];
-  List<dynamic> rate = [
-    [
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-    ]
-  ];
+   TextEditingController name_controller = TextEditingController(text: '');
+   TextEditingController pupil_name_controller = TextEditingController(text: '');
+   TextEditingController rate_controller = TextEditingController(text: '');
+   TextEditingController group_controller = TextEditingController(text: '');
+   TextEditingController time_controller = TextEditingController(text: '');
+   int count = 0;
+   bool isLoading = true;
+
+    @override
+  void initState() {
+      count = widget.sinf.names.length;
+    // TODO: implement initState
+    super.initState();
+    active();
+  }
+
+  void active() {
+      print('3');
+    widget.sinf.data.forEach((el12) {
+      sana.add(TextEditingController(text: el12));
+    });
+    print("4");
+     widget.sinf.names.forEach((el123) {
+       data.add(TextEditingController(text: el123));
+     });
+      print("5");
+     widget.sinf.rate.forEach((element) {
+       List<TextEditingController> temp23 = [];
+       element.forEach((element1) {
+         temp23.add(TextEditingController(text: element1));
+       });
+       rate.add(temp23);
+     });
+      print("6");
+    name_controller = TextEditingController(text: widget.sinf.name);
+    group_controller = TextEditingController(text: widget.sinf.tutorial);
+    time_controller = TextEditingController(text: widget.sinf.time);
+    setState(() {
+      isLoading = false;
+    });
+      print("7");
+  }
+  List<TextEditingController> data = [];
+  List<List<TextEditingController>> rate = [];
   Service service = Service();
-  List<dynamic> sana = [
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-  ];
-  final TextEditingController name_controller = TextEditingController(text: '');
-  final TextEditingController pupil_name_controller = TextEditingController(text: '');
-  final TextEditingController rate_controller = TextEditingController(text: '');
-  final TextEditingController group_controller = TextEditingController(text: '');
-  final TextEditingController time_controller = TextEditingController(text: '');
-  int count = 1;
+  List<dynamic> sana = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('fuck',
+        title: Text('Daomad',
           style: TextStyle(
               color: Colors.black
-          ),),
+          ),
+        ),
         backgroundColor: Colors.yellow,
       ),
-      body: Container(
+      body: isLoading?Center(
+        child: CircularProgressIndicator(),)
+      :Container(
         height: double.infinity,
         padding: EdgeInsets.only(top: 25,left: 10,right: 10,bottom: 10),
         child: SingleChildScrollView(
@@ -159,7 +98,8 @@ class _OquvchilarState extends State<Oquvchilar> {
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey)
                             ),
-                            labelText: 'Ism'
+                            labelText: 'Ism',
+                          contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                         ),
                         controller: name_controller,
                       ),
@@ -175,9 +115,11 @@ class _OquvchilarState extends State<Oquvchilar> {
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey)
                             ),
-                            labelText: 'Guruh'
+                            labelText: 'Guruh',
+                          contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                         ),
                         controller: group_controller,
+
                       ),
                     ),
                     SizedBox(
@@ -189,9 +131,11 @@ class _OquvchilarState extends State<Oquvchilar> {
                       child: TextField(
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey)
+                                borderSide: BorderSide(color: Colors.grey),
+
                             ),
-                            labelText: 'Dars vaqti'
+                            labelText: 'Dars vaqti',
+                          contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                         ),
                         controller: time_controller,
                       ),
@@ -224,6 +168,10 @@ class _OquvchilarState extends State<Oquvchilar> {
                         child: Text("Saqlash"),
                         color: Colors.blue,
                         onPressed: () async {
+                          if(name_controller.text.isNotEmpty &&
+                              time_controller.text.isNotEmpty &&
+                              group_controller.text.isNotEmpty
+                          ) {
                           List<String> dataStrings = [];
                           List<List<String>> rateStrings = [];
                           List<String> sanaStrings = [];
@@ -245,8 +193,8 @@ class _OquvchilarState extends State<Oquvchilar> {
                           });
                           print(rate);
 
-                          final  responce = await http.post(
-                              Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils.json'),
+                          final  responce = await http.patch(
+                              Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils/${widget.sinf.id}.json'),
                               body: jsonEncode(
                                   {
                                     "name":name_controller.text,
@@ -266,9 +214,19 @@ class _OquvchilarState extends State<Oquvchilar> {
                           Navigator.pushAndRemoveUntil(context,
                               MaterialPageRoute(builder: (builder)=> Kirish()),
                                   (route) => false);
+
+                          }
+                          else{
+                            Center(
+                              child: Text("Ko\'rsatilgan maydonlarni to'ldiring(Ism,Guruh,Vaqt)",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize:24
+                              ),),
+                            );
+                          }
                         }
                     ),
-
                   ],
                 ),
               ),
@@ -280,6 +238,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                   )
               ),*/
               SingleChildScrollView(
+                padding: EdgeInsets.only(right: 6),
                 scrollDirection: Axis.horizontal,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -288,7 +247,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                     Row(
                       children: [
                         SizedBox(
-                          width: 25,
+                          width: 24,
                         ),
                         Container(
                             height: 100,
@@ -358,8 +317,8 @@ class _OquvchilarState extends State<Oquvchilar> {
                                     });
                                   },
                                   child: Icon(
-                                    Icons.highlight_remove_rounded,
-                                    color: Colors.red,)
+                                      Icons.highlight_remove_rounded,
+                                  color: Colors.red,)
                               ),
                               Container(
                                 height: 30,
@@ -372,8 +331,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
-                                    contentPadding:
-                                    EdgeInsets.only(left: 2, bottom: 18),
+                                    contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                                   ),
                                   controller: data[index],
                                 ),
@@ -398,8 +356,7 @@ class _OquvchilarState extends State<Oquvchilar> {
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none,
                                             disabledBorder: InputBorder.none,
-                                            contentPadding:
-                                            EdgeInsets.only(left: 2, bottom: 18),
+                                            contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                                           ),
 
                                           controller: rate[index][index2],

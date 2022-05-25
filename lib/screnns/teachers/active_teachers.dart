@@ -1,64 +1,64 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:math';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/screnns/sinf_qowiw.dart';
 import 'package:http/http.dart'as http;
 
-import 'kirish.dart';
-class ActiceOquvchilar extends StatefulWidget {
-  final InfoPupils sinf;
+import '../kirish.dart';
+import 'oqituvchi qowiw.dart';
+class ActiveTeachers extends StatefulWidget {
+  final InfoTeachers sinf;
   final void Function() getsinf;
 
-  ActiceOquvchilar(this.sinf,this.getsinf);
+  ActiveTeachers(this.sinf,this.getsinf);
 
   @override
-  _ActiceOquvchilarState createState() => _ActiceOquvchilarState();
+  _ActiveTeachersState createState() => _ActiveTeachersState();
 }
-class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
+class _ActiveTeachersState extends State<ActiveTeachers> {
 
-   TextEditingController name_controller = TextEditingController(text: '');
-   TextEditingController pupil_name_controller = TextEditingController(text: '');
-   TextEditingController rate_controller = TextEditingController(text: '');
-   TextEditingController group_controller = TextEditingController(text: '');
-   TextEditingController time_controller = TextEditingController(text: '');
-   int count = 0;
-   bool isLoading = true;
+  TextEditingController name_controller = TextEditingController(text: '');
+  TextEditingController pupil_name_controller = TextEditingController(text: '');
+  TextEditingController rate_controller = TextEditingController(text: '');
+  TextEditingController group_controller = TextEditingController(text: '');
+  TextEditingController time_controller = TextEditingController(text: '');
+  int count = 0;
+  bool isLoading = true;
 
-    @override
+  @override
   void initState() {
-      count = widget.sinf.names.length;
+    count = widget.sinf.names.length;
     // TODO: implement initState
     super.initState();
     active();
   }
 
   void active() {
-      print('############################');
-    print(widget.sinf.data);
-      print('############################');
-    widget.sinf.data.forEach((el12) {
+    print("3");
+    for(String el12 in widget.sinf.data){
       sana.add(TextEditingController(text: el12));
-    });
-      print(sana.length);
-     widget.sinf.names.forEach((el123) {
-       data.add(TextEditingController(text: el123));
-     });
-     widget.sinf.rate.forEach((element) {
-       List<TextEditingController> temp23 = [];
-       element.forEach((element1) {
-         temp23.add(TextEditingController(text: element1));
-       });
-       rate.add(temp23);
-     });
+    }
+    print("4");
+    for(String el123 in widget.sinf.names){
+      data.add(TextEditingController(text: el123));
+    }
+    print("5");
+    for(List element in widget.sinf.rate){
+      List<TextEditingController> temp23 = [];
+      for(String element1 in element){
+        temp23.add(TextEditingController(text: element1));
+      }
+      rate.add(temp23);
+    }
+
+    print("6");
     name_controller = TextEditingController(text: widget.sinf.name);
     group_controller = TextEditingController(text: widget.sinf.tutorial);
     time_controller = TextEditingController(text: widget.sinf.time);
     setState(() {
       isLoading = false;
     });
+    print("7");
   }
   List<TextEditingController> data = [];
   List<List<TextEditingController>> rate = [];
@@ -78,7 +78,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
       ),
       body: isLoading?Center(
         child: CircularProgressIndicator(),)
-      :Container(
+          :Container(
         height: double.infinity,
         padding: EdgeInsets.only(top: 25,left: 10,right: 10,bottom: 10),
         child: SingleChildScrollView(
@@ -94,11 +94,12 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                       height: 40,
                       child: TextField(
                         decoration: InputDecoration(
-                            hintMaxLines: 1,
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey)
-                            ),
-                            labelText: 'Ism'
+                          hintMaxLines: 1,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey)
+                          ),
+                          labelText: 'Ism',
+                          contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                         ),
                         controller: name_controller,
                       ),
@@ -111,12 +112,14 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                       height: 40,
                       child: TextField(
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey)
-                            ),
-                            labelText: 'Guruh'
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey)
+                          ),
+                          labelText: 'Guruh',
+                          contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                         ),
                         controller: group_controller,
+
                       ),
                     ),
                     SizedBox(
@@ -127,10 +130,12 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                       height: 40,
                       child: TextField(
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey)
-                            ),
-                            labelText: 'Dars vaqti'
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+
+                          ),
+                          labelText: 'Dars vaqti',
+                          contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                         ),
                         controller: time_controller,
                       ),
@@ -163,49 +168,64 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                         child: Text("Saqlash"),
                         color: Colors.blue,
                         onPressed: () async {
-                          List<String> dataStrings = [];
-                          List<List<String>> rateStrings = [];
-                          List<String> sanaStrings = [];
-                          sana.forEach((element) {
-                            sanaStrings.add(element.text);
-                          });
-                          print(sanaStrings);
-                          print(data);
-                          data.forEach((element) {
-                            dataStrings.add(element.text);
-                          });
-                          print(dataStrings);
-                          rate.forEach((element) {
-                            List<String> temp23 = [];
-                            element.forEach((element1) {
-                              temp23.add(element1.text);
+                          if(name_controller.text.isNotEmpty &&
+                              time_controller.text.isNotEmpty &&
+                              group_controller.text.isNotEmpty
+                          ) {
+                            List<String> dataStrings = [];
+                            List<List<String>> rateStrings = [];
+                            List<String> sanaStrings = [];
+                            sana.forEach((element) {
+                              sanaStrings.add(element.text);
                             });
-                            rateStrings.add(temp23);
-                          });
-                          print(rate);
+                            print(sanaStrings);
+                            print(data);
+                            data.forEach((element) {
+                              dataStrings.add(element.text);
+                            });
+                            print(dataStrings);
+                            rate.forEach((element) {
+                              List<String> temp23 = [];
+                              element.forEach((element1) {
+                                temp23.add(element1.text);
+                              });
+                              rateStrings.add(temp23);
+                            });
+                            print(rate);
 
-                          final  responce = await http.patch(
-                              Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/pupils/${widget.sinf.id}.json'),
-                              body: jsonEncode(
-                                  {
-                                    "name":name_controller.text,
-                                    "time":time_controller.text,
-                                    "tutorial":group_controller.text,
-                                    "nameOfStudent": dataStrings,
-                                    "dateOfStudent":sanaStrings,
-                                    "rateOfStudent":rateStrings
-                                  }
-                              )
-                          );
+                            final  responce = await http.patch(
+                                Uri.parse('https://flutter-chat-36135-default-rtdb.firebaseio.com/teachers2/${widget.sinf.id}.json'),
+                                body: jsonEncode(
+                                    {
+                                      "name":name_controller.text,
+                                      "time":time_controller.text,
+                                      "tutorial":group_controller.text,
+                                      "nameOfStudent": dataStrings,
+                                      "dateOfStudent":sanaStrings,
+                                      "rateOfStudent":rateStrings
+                                    }
+                                )
+                            );
 
-                          print(dataStrings);
-                          print(sanaStrings);
-                          print(rateStrings);
-                          print(responce.body);
-                         await widget.getsinf;
-                          Navigator.pushAndRemoveUntil(context,
-                              MaterialPageRoute(builder: (builder)=> Kirish()),
-                                  (route) => false);
+                            print(dataStrings);
+                            print(sanaStrings);
+                            print(rateStrings);
+                            print(responce.body);
+                            await widget.getsinf;
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (builder)=> Kirish()),
+                                    (route) => false);
+
+                          }
+                          else{
+                            Center(
+                              child: Text("Ko\'rsatilgan maydonlarni to'ldiring(Ism,Guruh,Vaqt)",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize:24
+                                ),),
+                            );
+                          }
                         }
                     ),
                   ],
@@ -298,8 +318,8 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                                     });
                                   },
                                   child: Icon(
-                                      Icons.highlight_remove_rounded,
-                                  color: Colors.red,)
+                                    Icons.highlight_remove_rounded,
+                                    color: Colors.red,)
                               ),
                               Container(
                                 height: 30,
@@ -312,8 +332,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     disabledBorder: InputBorder.none,
-                                    contentPadding:
-                                    EdgeInsets.only(left: 2, bottom: 18),
+                                    contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                                   ),
                                   controller: data[index],
                                 ),
@@ -338,8 +357,7 @@ class _ActiceOquvchilarState extends State<ActiceOquvchilar> {
                                             focusedBorder: InputBorder.none,
                                             enabledBorder: InputBorder.none,
                                             disabledBorder: InputBorder.none,
-                                            contentPadding:
-                                            EdgeInsets.only(left: 2, bottom: 18),
+                                            contentPadding: EdgeInsets.only(left: 2, bottom: 18),
                                           ),
 
                                           controller: rate[index][index2],

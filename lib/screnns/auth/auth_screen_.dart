@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/screnns/change_password.dart';
-import 'package:flutter_chat/screnns/firebase_helper.dart';
-import 'package:flutter_chat/screnns/register.dart';
+import 'package:flutter_chat/screnns/auth/change_password.dart';
+import 'package:flutter_chat/screnns/auth/firebase_helper.dart';
+import 'package:flutter_chat/screnns/auth/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class AuthScreen extends StatelessWidget {
   TextEditingController email = TextEditingController();

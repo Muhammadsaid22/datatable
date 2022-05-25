@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/screnns/auth_screen_.dart';
+import 'package:flutter_chat/screnns/auth/auth_screen_.dart';
 
 import 'auth_screen_.dart';
 class ChangePassword extends StatefulWidget {
